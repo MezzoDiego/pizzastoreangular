@@ -21,8 +21,8 @@ export class LoginComponent {
   constructor(private router: Router, private authService: AuthService, private fb: FormBuilder) { }
 
   userReactive: LoginForm = this.fb.group({
-    username: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(4)]),
-    password: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(4)]),
+    username: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(3)]),
+    password: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(3)]),
   });
 
   ngOnDestroy(): void {
@@ -38,7 +38,6 @@ export class LoginComponent {
         takeUntil(this.destroy$)
         ).subscribe(res => {
           this.authService.setUserLogged(res);
-          this.router.navigateByUrl("welcome");
       });
     }
 }

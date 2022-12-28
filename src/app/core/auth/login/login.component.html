@@ -8,7 +8,7 @@
             <mat-label>Username</mat-label>
             <input matInput name="username" type="text" formControlName="username" placeholder="Inserire Username">
             <mat-error *ngIf="userReactive.get('username')?.hasError('required')">Username obbligatorio</mat-error>
-            <mat-error *ngIf="userReactive.get('username')?.hasError('minlength')">Il campo Username deve avere almeno 4
+            <mat-error *ngIf="userReactive.get('username')?.hasError('minlength')">Il campo Username deve avere almeno 3
               caratteri</mat-error>
           </mat-form-field>
         </div>
@@ -17,7 +17,7 @@
             <mat-label>Password</mat-label>
             <input matInput name="password" type="password" formControlName="password" placeholder="Inserire la password">
             <mat-error *ngIf="userReactive.get('password')?.hasError('required')">Password obbligatoria</mat-error>
-            <mat-error *ngIf="userReactive.get('password')?.hasError('minlength')">Il campo Password deve avere almeno 4
+            <mat-error *ngIf="userReactive.get('password')?.hasError('minlength')">Il campo Password deve avere almeno 3
               caratteri</mat-error>
           </mat-form-field>
         </div>

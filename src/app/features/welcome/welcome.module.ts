@@ -4,6 +4,7 @@ import { WelcomeComponent } from './welcome.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { UiCardComponent } from 'src/app/shared/components/ui-card/ui-card.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
-    UiCardComponent
+    UiCardComponent,
+    SharedModule
   ]
 })
 export class WelcomeModule { }

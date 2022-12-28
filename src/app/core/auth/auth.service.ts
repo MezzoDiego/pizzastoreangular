@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { User } from 'src/app/model/user';
 
@@ -14,7 +15,7 @@ export class AuthService {
       'Content-Type': 'application/json'
     })
   }
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
   
 
   private userLoggedSubject$: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null)
@@ -31,7 +32,14 @@ export class AuthService {
     if(user != null) {
     this.getUserRoles().subscribe({
       next: res => user!.ruoli = res.roles,
-      complete: () => this.userLoggedSubject$.next(user)
+      complete: () => {
+        this.userLoggedSubject$.next(user);
+        if(user.ruoli?.find(role => role === "FATTORINO_ROLE")){
+          this.router.navigateByUrl("fattorino/list");
+        } else {
+          this.router.navigateByUrl("welcome");
+        }
+      }
     });
   }
   }
