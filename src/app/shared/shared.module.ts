@@ -9,7 +9,7 @@ import { IfRoleDirective } from './directives/if-role.directive';
 @NgModule({
   declarations: [
     IsUserLoggedDirective,
-    IfRoleDirective
+    IfRoleDirective,
   ],
   imports: [
     CommonModule,
@@ -17,7 +17,7 @@ import { IfRoleDirective } from './directives/if-role.directive';
   ],
   exports: [
     IsUserLoggedDirective,
-    IfRoleDirective
+    IfRoleDirective,
   ]
 })
 export class SharedModule { }
