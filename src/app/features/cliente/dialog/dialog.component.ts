@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Cliente } from 'src/app/model/cliente';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { ClienteService } from '../cliente.service';
 
 @Component({
@@ -11,20 +12,20 @@ import { ClienteService } from '../cliente.service';
 export class DialogComponent {
   clienteToDelete?: Cliente;
 
-  constructor(private clienteService: ClienteService,/* private snackBarService: SnackbarService,*/
+  constructor(private clienteService: ClienteService, private snackBarService: SnackbarService,
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { idCliente: number }) {
     if (data) {
-      this.getUser(data.idCliente);
+      this.getCliente(data.idCliente);
     }
   }
 
-  getUser(idCliente: number) {
-    // this.clienteService.findById(idCliente).subscribe(res => {
-    //   if (res) {
-    //     this.clienteToDelete = { ...res }
-    //   }
-    // });
+  getCliente(idCliente: number) {
+    this.clienteService.findById(idCliente).subscribe(res => {
+      if (res) {
+        this.clienteToDelete = { ...res }
+      }
+    });
   }
 
   closeDialog() {
@@ -32,9 +33,9 @@ export class DialogComponent {
   }
 
   save() {
-  //   this.clienteService.delete(this.data.idCliente).subscribe(res => {
-  //     this.snackBarService.openSnackBar('Operazione effettuata correttamente.', ["blue"])
-  //   });
-  //   this.dialogRef.close();
+    this.clienteService.delete(this.data.idCliente).subscribe(res => {
+      this.snackBarService.openSnackBar('Operazione effettuata correttamente.', ["blue"])
+    });
+    this.dialogRef.close();
   }
 }

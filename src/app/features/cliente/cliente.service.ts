@@ -20,4 +20,20 @@ export class ClienteService {
     getAllClienti(): Observable<Cliente[]> {
         return this.http.get<Cliente[]>(this.apiServer);
     }
+
+    findById(id: number): Observable<Cliente> {
+      return this.http.get<Cliente>(this.apiServer + "/" + id);
+    }
+
+    delete(id: number): Observable<boolean> {
+      return this.http.get<boolean>(this.apiServer + "/changeAbilitation/" + id);
+     }
+
+     create(clienteInput: Cliente): Observable<Cliente> {
+      return this.http.post<Cliente>(this.apiServer, clienteInput, this.httpOptions);
+    }
+
+    update(clienteInput: Cliente): Observable<Cliente> {
+      return this.http.put<Cliente>(this.apiServer + "/" + clienteInput.id, clienteInput, this.httpOptions);
+    }
 }

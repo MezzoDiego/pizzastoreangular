@@ -6,11 +6,27 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MaterialModule } from 'src/app/shared/material/material.module';
 import { DialogComponent } from './dialog/dialog.component';
+import { DetailClienteComponent } from './detail-cliente/detail-cliente.component';
 
 const routes: Routes = [
   {
     path: 'list',
     component: ListClienteComponent
+  },
+
+  {
+    path: ':id',
+    component: DetailClienteComponent
+  },
+
+  {
+    path: 'create',
+    component: DetailClienteComponent
+  },
+
+  {
+    path: 'edit/:id',
+    component: DetailClienteComponent
   },
 
   {
@@ -25,7 +41,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ListClienteComponent,
-    DialogComponent
+    DialogComponent,
+    DetailClienteComponent
   ],
   imports: [
     CommonModule,

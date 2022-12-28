@@ -24,10 +24,10 @@ export class ListClienteComponent {
     this.getData();
   }
 
-  openDialog(idUser: number): void {
+  openDialog(idCliente: number): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: 'auto',
-      data: {idUser}
+      data: {idCliente}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -49,7 +49,7 @@ export class ListClienteComponent {
   }
 
   showDetail(id: number) {
-    this.router.navigate(["user/", id], {queryParams: {operation:"readOnly"}});
+    this.router.navigate(["cliente/", id], {queryParams: {operation:"readOnly"}});
   }
 
   onClickDelete(id: number) {
@@ -57,11 +57,11 @@ export class ListClienteComponent {
   }
 
   onClickAddNew() {
-    this.router.navigate(["create"], {queryParams: {operation:"add"}});
+    this.router.navigate(["cliente/create"], {queryParams: {operation:"add"}});
   }
 
   onClickUpdate(id: number) {
-    this.router.navigate(["edit/", id], {queryParams: {operation:"edit"}});
+    this.router.navigate(["cliente/edit/", id], {queryParams: {operation:"edit"}});
   }
 
 }
