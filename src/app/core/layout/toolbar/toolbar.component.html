@@ -4,7 +4,7 @@
     <button mat-button routerLink="/regista/list">Regista</button>
     <span class="example-spacer"></span>
     <div>
-      <!-- <span>{{ (authService.getUserLogged() | async)?.username }}</span> -->
+      <span>{{ (authService.getUserLogged() | async)?.username }}</span>
     </div>
     <button mat-button color="warn" (click)="logout()">Logout</button>
   </mat-toolbar>
