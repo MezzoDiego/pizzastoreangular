@@ -1,3 +1,2 @@
-<app-toolbar ></app-toolbar>
+<app-toolbar [isLogged]="authService.isLoggedIn()" ></app-toolbar>
 <router-outlet></router-outlet>
-<!-- [isLogged]="authService.isLoggedIn()" -->
