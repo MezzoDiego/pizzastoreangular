@@ -28,10 +28,12 @@ export class AuthService {
 
   setUserLogged(user: User | null) {
     this.userLoggedSubject$.next(user);
+    if(user != null) {
     this.getUserRoles().subscribe({
       next: res => user!.ruoli = res.roles,
       complete: () => this.userLoggedSubject$.next(user)
     });
+  }
   }
 
   getUserLogged(): Observable<User | null> {
