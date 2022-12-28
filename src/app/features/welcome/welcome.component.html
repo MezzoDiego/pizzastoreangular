@@ -1,0 +1,21 @@
+<div class="contenitore">
+    <mat-card class="main-card" style="padding: 100px; background-color: rgba(10, 128, 69, 0.401);">
+      <mat-card-header>
+        <mat-card-title>Benvenuto su Pizza Store!</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Using a series of utilities, you can create this jumbotron, just like the one
+          in previous versions of Bootstrap.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/regista/list">Vai a Lista Registi</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div class="contenitore">
+    <app-ui-card [cardBody]="'body card Registi'" [cardLink]="'/regista/list'" [cardTitle]="'Ricerca Registi'"></app-ui-card>
+    <app-ui-card [cardBody]="'body card Nuovo Regista'" [cardLink]="'/regista/create'" [cardTitle]="'Inserisci Nuovo Regista'"></app-ui-card>
+    <app-ui-card [cardBody]="'body card Film'" [cardLink]="'/film/list'" [cardTitle]="'Lista Film'"></app-ui-card>
+  </div>
