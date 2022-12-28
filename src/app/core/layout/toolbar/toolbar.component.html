@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
     <button mat-button routerLink="/welcome">Home</button>
-    <button mat-button routerLink="/film/list">Film</button>
-    <button mat-button routerLink="/regista/list">Regista</button>
+    <button mat-button disabled="disabled">Link</button>
+    <button mat-button *ifRole="['ADMIN_ROLE']" (click)="ricerca()">Ricerca Clienti</button>
     <span class="example-spacer"></span>
     <div>
       <span style="font-size: smaller;">User:</span>     {{ (authService.getUserLogged() | async)?.username | uppercase}} 

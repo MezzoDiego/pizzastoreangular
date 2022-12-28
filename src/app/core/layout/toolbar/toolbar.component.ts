@@ -17,4 +17,8 @@ export class ToolbarComponent {
     this.authService.logout();
     this.router.navigateByUrl('login');
   }
+
+  ricerca() {
+    this.router.navigate(['/cliente/search'], {queryParams: {operation:"search"}})
+  }
 }

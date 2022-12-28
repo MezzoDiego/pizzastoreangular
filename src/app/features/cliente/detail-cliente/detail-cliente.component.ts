@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { DataSearchService } from 'src/app/shared/services/data-search.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { ClienteService } from '../cliente.service';
 
@@ -25,7 +26,8 @@ export class DetailClienteComponent {
     private snackbarService: SnackbarService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private dataSearchService: DataSearchService) {
   }
 
   clienteReactive: ClienteForm = this.fb.group({
@@ -51,7 +53,10 @@ export class DetailClienteComponent {
     if (operation?.includes("add")) {
       this.urlFlag = "addActivated";
     }
-    if (!operation?.includes("add")) {
+    if(operation?.includes("search")) {
+      this.urlFlag = "searchActivated";
+    }
+    if (!operation?.includes("add") && !operation?.includes("search")) {
       this.clienteReactive.get('id')?.setValue(id);
       this.clienteService.findById(id).subscribe(res => {
         this.clienteReactive.patchValue(res);
@@ -73,6 +78,13 @@ export class DetailClienteComponent {
       this.clienteService.update(this.clienteReactive.value).subscribe({
         next: clienteItem => this.clienteReactive.patchValue(clienteItem),
         complete: () => this.router.navigate([`/cliente/list`], this.snackbarService.openSnackBar('Operazione effettuata correttamente.', ["blue"])!)
+      });
+    }
+
+    if(this.urlFlag == "searchActivated") {
+      this.clienteService.search(this.clienteReactive.value).subscribe({
+        next: clienteItem => this.dataSearchService.setData(clienteItem),
+        complete: () => this.router.navigate(['/cliente/list'], {queryParams: {search:"true"}})
       });
     }
   }

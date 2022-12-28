@@ -30,6 +30,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'search',
+    component: DetailClienteComponent
+  },
+
+  {
     path: '',
     redirectTo: 'list',
     pathMatch: 'full'

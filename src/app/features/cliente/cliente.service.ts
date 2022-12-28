@@ -36,4 +36,8 @@ export class ClienteService {
     update(clienteInput: Cliente): Observable<Cliente> {
       return this.http.put<Cliente>(this.apiServer + "/" + clienteInput.id, clienteInput, this.httpOptions);
     }
+
+    search(example: Cliente): Observable<Cliente[]> {
+      return this.http.post<Cliente[]>(this.apiServer + "/search", example, this.httpOptions);
+    }
 }
