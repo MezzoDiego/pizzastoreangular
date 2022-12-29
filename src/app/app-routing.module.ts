@@ -14,6 +14,12 @@ const routes: Routes = [
     loadChildren: () => import('./features/cliente/cliente.module').then(m => m.ClienteModule),
     canActivate: [AuthGuard]
   },
+
+  {
+    path: 'pizza',
+    loadChildren: () => import('./features/pizza/pizza.module').then(m => m.PizzaModule),
+    canActivate: [AuthGuard]
+  },
   
   {
     path: 'login',
