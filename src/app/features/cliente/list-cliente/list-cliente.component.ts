@@ -19,14 +19,15 @@ export class ListClienteComponent{
   dataSource: MatTableDataSource<Cliente> = new MatTableDataSource<Cliente>();
   displayedColumns: string[] = ['id', 'nome', 'cognome', 'indirizzo', 'attivo', 'azioni'];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  urlSearchOperationFlag: string | null = ""
 
   ngOnInit(): void {
     let operation = this.route.snapshot.queryParamMap.get('search');
+    this.urlSearchOperationFlag = operation;
     if(operation == 'true') {
-      this.dataSource = this.dataSearchService.getData();
+      this.dataSource.data = this.dataSearchService.getData();
     } else {
       this.getData();
-      this.router.navigate(['/cliente/list']);
     }
   }
 
@@ -68,6 +69,11 @@ export class ListClienteComponent{
 
   onClickUpdate(id: number) {
     this.router.navigate(["cliente/edit/", id], {queryParams: {operation:"edit"}});
+  }
+
+  resetDataSource() {
+    this.getData();
+    this.urlSearchOperationFlag = "";
   }
 
 }

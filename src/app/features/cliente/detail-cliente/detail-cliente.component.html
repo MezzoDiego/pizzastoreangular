@@ -5,6 +5,8 @@
             <mat-card-title *ngIf="urlFlag =='readOnlyActivated'">Visualizza dettaglio</mat-card-title>
             <mat-card-title *ngIf="urlFlag =='addActivated'">Inserisci nuovo elemento</mat-card-title>
             <mat-card-title *ngIf="urlFlag =='editActivated'">Modifica elemento</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='searchActivated'">Ricerca elemento</mat-card-title>
+
 
         </mat-card-header>
         <form style="background-color: darkgreen" (ngSubmit)="handleFormRequest()" [formGroup]="clienteReactive">
