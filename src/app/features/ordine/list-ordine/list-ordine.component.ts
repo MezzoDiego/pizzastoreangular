@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,7 @@ import { OrdineService } from '../ordine.service';
   templateUrl: './list-ordine.component.html',
   styleUrls: ['./list-ordine.component.css']
 })
-export class ListOrdineComponent {
+export class ListOrdineComponent implements OnInit{
 
   constructor(private ordineService: OrdineService, private router: Router, public dialog: MatDialog, private route: ActivatedRoute, private dataSearchService: DataSearchService) {}
   dataSource: MatTableDataSource<Ordine> = new MatTableDataSource<Ordine>();
@@ -26,7 +26,7 @@ export class ListOrdineComponent {
   displayedClientiColumns: string[] = ['id', 'nome', 'cognome', 'indirizzo', 'attivo'];
   ricavi: number = 0;
   ordini: number = 0;
-  pizze: number = 0;
+  pizze: number = 0;  
 
   ngOnInit(): void {
     let operation = this.route.snapshot.queryParamMap.get('search');
@@ -34,10 +34,12 @@ export class ListOrdineComponent {
     if(operation == 'true') {
       this.dataSource.data = this.dataSearchService.getData();
     } else if(operation == 'false') {
-      this.clientiDataSource.data = this.dataSearchService.getData();
-      this.ricavi = this.dataSearchService.getRicavi();
-      this.ordini = this.dataSearchService.getOrdini();
-      this.pizze = this.dataSearchService.getPizze();
+      setTimeout(() => { 
+        this.clientiDataSource.data = this.dataSearchService.getData();
+        this.ricavi = this.dataSearchService.getRicavi();
+        this.ordini = this.dataSearchService.getOrdini();
+        this.pizze = this.dataSearchService.getPizze();
+      }, 100)
     } else {
       this.getData();
     }
