@@ -6,6 +6,8 @@
             <mat-card-title *ngIf="urlFlag =='addActivated'">Inserisci nuovo elemento</mat-card-title>
             <mat-card-title *ngIf="urlFlag =='editActivated'">Modifica elemento</mat-card-title>
             <mat-card-title *ngIf="urlFlag =='searchActivated'">Ricerca elemento</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='reportActivated'">Ricerca elemento</mat-card-title>
+
 
 
         </mat-card-header>
@@ -20,7 +22,7 @@
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
 
-                <mat-form-field class="form-element">
+                <mat-form-field class="form-element" *ngIf="urlFlag != 'reportActivated'">
                     <mat-label>Codice</mat-label>
                     <input matInput name="codice" type="text" formControlName="codice" placeholder="inserisci codice..." >
                     <mat-error *ngIf="ordineReactive.get('codice')?.hasError('required')">Codice obbligatorio</mat-error>

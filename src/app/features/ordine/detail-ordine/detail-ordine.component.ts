@@ -86,6 +86,16 @@ export class DetailOrdineComponent {
       this.ordineReactive.get('pizzaIds')?.removeValidators([Validators.required])
 
     }
+
+    if(this.router.url.includes('report')) {
+      this.urlFlag = "reportActivated";
+      this.ordineReactive.get('data')?.removeValidators([Validators.required]);
+      this.ordineReactive.get('codice')?.removeValidators([Validators.required, Validators.minLength(4)]);
+      this.ordineReactive.get('cliente')?.removeValidators([Validators.required]);
+      this.ordineReactive.get('fattorino')?.removeValidators([Validators.required])
+      this.ordineReactive.get('pizzaIds')?.removeValidators([Validators.required])
+    }
+
     if (operation && !operation?.includes("add") && !operation?.includes("search")) {
       const add: FormArray = this.ordineReactive.get('pizzaIds') as FormArray;
       this.ordineReactive.get('id')?.setValue(id);
@@ -144,14 +154,14 @@ export class DetailOrdineComponent {
       });
     }
 
-    if(this.urlFlag == "searchActivated") {
+    if(this.urlFlag == "searchActivated" || this.urlFlag == "reportActivated") {
 
       if(this.ordineReactive.get('data')?.value != '') {
 
       let date = this.ordineReactive.get('data')?.value.toISOString();
       let dateForm = date?.split('T')[0]!;
       this.ordineReactive.get('data')?.setValue(dateForm);
-      
+
       }
 
       if(this.ordineReactive.get('cliente')?.value == '') {
