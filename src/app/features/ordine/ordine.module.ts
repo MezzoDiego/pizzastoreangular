@@ -40,6 +40,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'statistiche',
+    component: DetailOrdineComponent
+  },
+
+  {
     path: '',
     redirectTo: 'list',
     pathMatch: 'full'

@@ -58,6 +58,11 @@ export class DetailOrdineComponent {
     pizzaIds: this.fb.nonNullable.array([], [Validators.required])
   });
 
+  statsOrdineReactive: FormGroup = this.fb.group({
+    dataInizio: this.fb.nonNullable.control('', [Validators.required]),
+    dataFine: this.fb.nonNullable.control('', [Validators.required])
+  });
+
   
 
   urlFlag: string = "";
@@ -94,6 +99,10 @@ export class DetailOrdineComponent {
       this.ordineReactive.get('cliente')?.removeValidators([Validators.required]);
       this.ordineReactive.get('fattorino')?.removeValidators([Validators.required])
       this.ordineReactive.get('pizzaIds')?.removeValidators([Validators.required])
+    }
+
+    if(this.router.url.includes('statistiche')) {
+      this.urlFlag = "statsActivated";
     }
 
     if (operation && !operation?.includes("add") && !operation?.includes("search")) {
@@ -178,6 +187,39 @@ export class DetailOrdineComponent {
       this.ordineService.search(this.ordineReactive.value).subscribe({
         next: ordineItem => this.dataSearchService.setData(ordineItem),
         complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"true"}})
+      });
+
+    }
+
+    if(this.urlFlag == "statsActivated") {
+
+      let dateStart = this.statsOrdineReactive.get('dataInizio')?.value.toISOString();
+      let dateFormStart = dateStart?.split('T')[0]!;
+      this.statsOrdineReactive.get('dataInizio')?.setValue(dateFormStart);
+
+        let dateEnd = this.statsOrdineReactive.get('dataFine')?.value.toISOString();
+        let dateFormEnd = dateEnd?.split('T')[0]!;
+        this.statsOrdineReactive.get('dataFine')?.setValue(dateFormEnd);
+  
+
+      this.ordineService.getRicaviTotali(this.statsOrdineReactive.value).subscribe({
+        next: ricaviItem => this.dataSearchService.setRicavi(ricaviItem),
+        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"false"}})
+      });
+
+      this.ordineService.getOrdiniTotali(this.statsOrdineReactive.value).subscribe({
+        next: ordiniItem => this.dataSearchService.setOrdini(ordiniItem),
+        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"false"}})
+      });
+
+      this.ordineService.getPizzeTotali(this.statsOrdineReactive.value).subscribe({
+        next: pizzeItem => this.dataSearchService.setPizze(pizzeItem),
+        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"false"}})
+      });
+
+      this.ordineService.getClientiVirtuosi(this.statsOrdineReactive.value).subscribe({
+        next: clienti => this.dataSearchService.setData(clienti),
+        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"false"}})
       });
 
     }

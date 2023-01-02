@@ -7,11 +7,13 @@
             <mat-card-title *ngIf="urlFlag =='editActivated'">Modifica elemento</mat-card-title>
             <mat-card-title *ngIf="urlFlag =='searchActivated'">Ricerca elemento</mat-card-title>
             <mat-card-title *ngIf="urlFlag =='reportActivated'">Ricerca elemento</mat-card-title>
+            <mat-card-title *ngIf="urlFlag =='statsActivated'">Visualizza Statistiche</mat-card-title>
+
 
 
 
         </mat-card-header>
-        <form style="background-color: darkgreen" (ngSubmit)="handleFormRequest()" [formGroup]="ordineReactive">
+        <form style="background-color: darkgreen" (ngSubmit)="handleFormRequest()" [formGroup]="ordineReactive" *ngIf="urlFlag !='statsActivated'">
 
             <mat-form-field appearance="fill" class="form-element">
                 <mat-label>Choose a date</mat-label>
@@ -71,10 +73,47 @@
             <div class="form-element">
                 <button mat-raised-button color="primary" type="submit" class="button" *ngIf="urlFlag != 'readOnlyActivated'" [disabled]="ordineReactive.invalid">Submit Form</button>
             </div>
-            <div class="form-element">
+            <div class="form-element" *ngIf="urlFlag != 'reportActivated'">
                 <button mat-raised-button color="accent" type="submit" class="button" routerLink="/ordine/list">Back</button>
             </div>
 
+            <div class="form-element" *ngIf="urlFlag == 'reportActivated'">
+                <button mat-raised-button color="accent" type="submit" class="button" routerLink="/welcome">Back</button>
+            </div>
+
         </form>
+
+
+        <form style="background-color: darkgreen" (ngSubmit)="handleFormRequest()" [formGroup]="statsOrdineReactive" *ngIf="urlFlag =='statsActivated'">
+
+            <mat-form-field appearance="fill" class="form-element">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" name="dataInizio" formControlName="dataInizio" placeholder="dd/MM/yyyy" >
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-error *ngIf="statsOrdineReactive.get('dataInizio')?.hasError('required')">Data Inizio obbligatoria</mat-error>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="form-element">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker1" name="dataFine" formControlName="dataFine" placeholder="dd/MM/yyyy" >
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-error *ngIf="statsOrdineReactive.get('dataFine')?.hasError('required')">Data Fine obbligatoria</mat-error>
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+
+
+            <div class="form-element">
+                <button mat-raised-button color="primary" type="submit" class="button" [disabled]="statsOrdineReactive.invalid">Submit Form</button>
+            </div>
+            <div class="form-element">
+                <button mat-raised-button color="accent" type="submit" class="button" routerLink="/welcome">Back</button>
+            </div>
+
+        </form>
+
+
     </mat-card>
 </div>
