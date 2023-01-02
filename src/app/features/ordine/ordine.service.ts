@@ -63,4 +63,8 @@ export class OrdineService {
     getClientiVirtuosi(dateInput: Stats): Observable<Cliente[]> {
       return this.http.post<Cliente[]>(this.apiServer + "/ordine/clientiVirtuosiWithOrdineBetween", dateInput, this.httpOptions );
     }
+
+    getOrdiniPerFattorino(): Observable<Ordine[]> {
+      return this.http.get<Ordine[]>(this.apiServer + "/ordine/fattorino");
+    }
 }

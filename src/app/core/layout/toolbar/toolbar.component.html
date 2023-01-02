@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <button mat-button routerLink="/welcome">Home</button>
+    <button mat-button routerLink="/welcome" [disabled]="toggle()">Home</button>
     <button mat-button disabled="disabled">Link</button>
     <button mat-button *ifRole="['ADMIN_ROLE']" (click)="ricercaClienti()">Ricerca Clienti</button>
     <button mat-button *ifRole="['PIZZAIOLO_ROLE']" (click)="ricercaPizze()">Ricerca Pizze</button>

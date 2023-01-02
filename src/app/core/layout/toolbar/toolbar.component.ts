@@ -29,4 +29,15 @@ export class ToolbarComponent {
   ricercaOrdini() {
     this.router.navigate(['/ordine/search'], {queryParams: {operation:"search"}})
   }
+
+  toggle(): boolean {
+    let disable: boolean = false;
+    this.authService.getUserLogged().subscribe(res => {
+      if (res?.ruoli?.find(roleItem => roleItem == 'FATTORINO_ROLE')) {
+        disable = true;
+      }
+      return disable;
+    });
+    return disable;
+  }
 }
