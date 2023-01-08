@@ -66,7 +66,7 @@
                   <div *ngIf="urlFlag != 'readOnlyActivated'">
                     <mat-error *ngIf="ordineReactive.get('pizzaIds')?.hasError('required')">Selezionare almeno una pizza</mat-error>
                   <section class="form-element" *ngFor="let pizzaItem of pizze" >
-                    <mat-checkbox [checked]="doCheck(pizzaItem.id!)" [value]="pizzaItem.id | json" (change)="please($event)" name="pizzaIds" formArrayName="pizzaIds" >{{pizzaItem.descrizione}}</mat-checkbox>
+                    <mat-checkbox [checked]="doCheck(pizzaItem.id!)" [value]="pizzaItem.id | json" (change)="onChange($event)" name="pizzaIds" formArrayName="pizzaIds" >{{pizzaItem.descrizione}}</mat-checkbox>
                 </section>
                   </div>
 

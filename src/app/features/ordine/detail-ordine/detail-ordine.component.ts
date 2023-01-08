@@ -63,7 +63,7 @@ export class DetailOrdineComponent {
     dataFine: this.fb.nonNullable.control('', [Validators.required])
   });
 
-  
+
 
   urlFlag: string = "";
   errorMessage: string = "";
@@ -92,7 +92,7 @@ export class DetailOrdineComponent {
 
     }
 
-    if(this.router.url.includes('report')) {
+    if (this.router.url.includes('report')) {
       this.urlFlag = "reportActivated";
       this.ordineReactive.get('data')?.removeValidators([Validators.required]);
       this.ordineReactive.get('codice')?.removeValidators([Validators.required, Validators.minLength(4)]);
@@ -101,7 +101,7 @@ export class DetailOrdineComponent {
       this.ordineReactive.get('pizzaIds')?.removeValidators([Validators.required])
     }
 
-    if(this.router.url.includes('statistiche')) {
+    if (this.router.url.includes('statistiche')) {
       this.urlFlag = "statsActivated";
     }
 
@@ -111,7 +111,7 @@ export class DetailOrdineComponent {
       this.ordineService.findById(id).subscribe(res => {
         this.date = res.data;
         this.ordineReactive.patchValue(res);
-        
+
         res.pizzaIds?.forEach(element => {
           add.push(new FormControl(element))
         });
@@ -134,7 +134,7 @@ export class DetailOrdineComponent {
   }
 
   handleFormRequest(): void {
-    
+
     if (this.urlFlag == "addActivated") {
 
       let date = this.ordineReactive.get('data')?.value.toISOString();
@@ -149,86 +149,83 @@ export class DetailOrdineComponent {
 
     if (this.urlFlag == "editActivated") {
 
-      if(this.date != this.ordineReactive.get('data')?.value) {
+      if (this.date != this.ordineReactive.get('data')?.value) {
 
-      let date = this.ordineReactive.get('data')?.value.toISOString();
-      let dateForm = date?.split('T')[0]!;
-      this.ordineReactive.get('data')?.setValue(dateForm);
+        let date = this.ordineReactive.get('data')?.value.toISOString();
+        let dateForm = date?.split('T')[0]!;
+        this.ordineReactive.get('data')?.setValue(dateForm);
 
       }
-      
+
       this.ordineService.update(this.ordineReactive.value).subscribe({
         next: ordineItem => this.ordineReactive.patchValue(ordineItem),
         complete: () => this.router.navigate([`/ordine/list`], this.snackbarService.openSnackBar('Operazione effettuata correttamente.', ["blue"])!)
       });
     }
 
-    if(this.urlFlag == "searchActivated" || this.urlFlag == "reportActivated") {
+    if (this.urlFlag == "searchActivated" || this.urlFlag == "reportActivated") {
 
-      if(this.ordineReactive.get('data')?.value != '') {
+      if (this.ordineReactive.get('data')?.value != '') {
 
-      let date = this.ordineReactive.get('data')?.value.toISOString();
-      let dateForm = date?.split('T')[0]!;
-      this.ordineReactive.get('data')?.setValue(dateForm);
+        let date = this.ordineReactive.get('data')?.value.toISOString();
+        let dateForm = date?.split('T')[0]!;
+        this.ordineReactive.get('data')?.setValue(dateForm);
 
       }
 
-      if(this.ordineReactive.get('cliente')?.value == '') {
+      if (this.ordineReactive.get('cliente')?.value == '') {
         this.ordineReactive.get('cliente')?.setValue(null);
-        // this.ordineReactive.get('cliente')?.disable();
       }
 
-      if(this.ordineReactive.get('fattorino')?.value == '') {
+      if (this.ordineReactive.get('fattorino')?.value == '') {
         this.ordineReactive.get('fattorino')?.setValue(null);
-        // this.ordineReactive.get('fattorino')?.disable();
 
       }
 
       this.ordineService.search(this.ordineReactive.value).subscribe({
         next: ordineItem => this.dataSearchService.setData(ordineItem),
-        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"true"}})
+        complete: () => this.router.navigate(['/ordine/list'], { queryParams: { search: "true" } })
       });
 
     }
 
-    if(this.urlFlag == "statsActivated") {
+    if (this.urlFlag == "statsActivated") {
 
       let dateStart = this.statsOrdineReactive.get('dataInizio')?.value.toISOString();
       let dateFormStart = dateStart?.split('T')[0]!;
       this.statsOrdineReactive.get('dataInizio')?.setValue(dateFormStart);
 
-        let dateEnd = this.statsOrdineReactive.get('dataFine')?.value.toISOString();
-        let dateFormEnd = dateEnd?.split('T')[0]!;
-        this.statsOrdineReactive.get('dataFine')?.setValue(dateFormEnd);
-  
+      let dateEnd = this.statsOrdineReactive.get('dataFine')?.value.toISOString();
+      let dateFormEnd = dateEnd?.split('T')[0]!;
+      this.statsOrdineReactive.get('dataFine')?.setValue(dateFormEnd);
+
 
       this.ordineService.getRicaviTotali(this.statsOrdineReactive.value).subscribe({
         next: ricaviItem => this.dataSearchService.setRicavi(ricaviItem),
-        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"false"}})
+        complete: () => this.router.navigate(['/ordine/list'], { queryParams: { search: "false" } })
       });
 
       this.ordineService.getOrdiniTotali(this.statsOrdineReactive.value).subscribe({
         next: ordiniItem => this.dataSearchService.setOrdini(ordiniItem),
-        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"false"}})
+        complete: () => this.router.navigate(['/ordine/list'], { queryParams: { search: "false" } })
       });
 
       this.ordineService.getPizzeTotali(this.statsOrdineReactive.value).subscribe({
         next: pizzeItem => this.dataSearchService.setPizze(pizzeItem),
-        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"false"}})
+        complete: () => this.router.navigate(['/ordine/list'], { queryParams: { search: "false" } })
       });
 
       this.ordineService.getClientiVirtuosi(this.statsOrdineReactive.value).subscribe({
         next: clienti => this.dataSearchService.setData(clienti),
-        complete: () => this.router.navigate(['/ordine/list'], {queryParams: {search:"false"}})
+        complete: () => this.router.navigate(['/ordine/list'], { queryParams: { search: "false" } })
       });
 
     }
   }
 
-  please(event: MatCheckboxChange) {
+  onChange(event: MatCheckboxChange) {
     const add: FormArray = this.ordineReactive.get('pizzaIds') as FormArray;
     if (event.source.checked) {
-      // add.addValidators([Validators.required])
       add.push(new FormControl(event.source.value));
     } else {
       add.removeAt(add.value.indexOf(event.source.value))
@@ -236,8 +233,8 @@ export class DetailOrdineComponent {
   }
 
   compareObjects(o1: any, o2: any): boolean {
-    if(o1 && o2) {
-    return o1.name === o2.name && o1.id === o2.id;
+    if (o1 && o2) {
+      return o1.name === o2.name && o1.id === o2.id;
     }
     return false;
   }
@@ -245,20 +242,10 @@ export class DetailOrdineComponent {
   doCheck(pizzaId: number): boolean {
 
     const add: FormArray = this.ordineReactive.get('pizzaIds') as FormArray;
-    if(add.value.find((e: number) => e != null)){
-    // add.addValidators([Validators.required]);
-    return add.value.find((element: number) => element == pizzaId);
+    if (add.value.find((e: number) => e != null)) {
+      return add.value.find((element: number) => element == pizzaId);
     }
     return false;
   }
 }
 
-/*
-
-|.. TODO ..|
-
-° Visualizza dettaglio: mancano delle cose...
-° testing a tutto spiano...@#]##@#èasdasdihouysafdy
-
-
-*/
